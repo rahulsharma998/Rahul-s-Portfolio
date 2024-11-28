@@ -29,14 +29,14 @@ body {
 
 
     /** Background colors */
-    --bg-wild-red-yonder: hsla(216, 33%, 68%, 1);
-    --bg-carolina-red: hsla(199, 89%, 49%, 1);
-    --bg-prussian-red: hsla(216, 33%, 20%, 1);
-    --bg-oxford-red: hsla(222, 44%, 13%, 1);
-    --bg-oxford-red-2: hsla(222, 47%, 11%, 1);
-    --bg-color: #1f242d;
-    --second-bg-color: #323946;
-    --main-color: #0ef;
+    --bg-wild-red-yonder: hsla(270, 40%, 80%, 1); /* Lavender Gray */
+--bg-carolina-red: hsla(300, 60%, 50%, 1); /* Bright Magenta */
+--bg-prussian-red: hsla(240, 30%, 20%, 1); /* Deep Navy */
+--bg-oxford-red: hsla(250, 35%, 15%, 1); /* Dark Purple */
+--bg-oxford-red-2: hsla(250, 38%, 12%, 1); /* Midnight Purple */
+--bg-color: #282c34; /* Charcoal Gray */
+--second-bg-color: #3c4151; /* Shadow Gray */
+--main-color: #ff6f61; /* Coral Red */
 
     /** Text colors */
     --text-color: #fff;
@@ -79,7 +79,7 @@ body {
     /** Gradient colors */
     --gradient-1: linear-gradient(90deg, #0ea5ea, #0bd1d1 51%);
     --gradient-2: linear-gradient(90deg, #0ea5ea, #0bd1d1 51%, #0ea5ea);
-    --gradient-3: linear-gradient(0deg, #000d1a, transparent);
+    --gradient-3: linear-gradient(0deg, #cfe4f9, transparent);
 
     /**
      * TRANSITION
