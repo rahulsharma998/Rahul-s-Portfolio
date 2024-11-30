@@ -13,13 +13,14 @@ html {
     font-size: 62.5%;
     overflow-x: hidden;
 }
-
 body {
     background: var(--bg-oxford-red-2);
     color: var(--text-color);
-    /* color: var(--text-shadow-red); */
-
+    height: 100vh; 
+    display: flex; 
+    flex-direction: column; 
 }
+
 
 :root {
 
@@ -105,6 +106,7 @@ section {
     padding: 10rem 9% 2rem;
 }
 
+/* General Header Styles */
 .header {
     position: fixed;
     top: 0;
@@ -129,30 +131,61 @@ section {
     cursor: default;
 }
 
+/* Navbar Menu Links */
+#nav-menu {
+    list-style: none;
+    display: flex;
+    background: var(--bg-oxford-red);
+}
+
 #nav-menu a {
     font-size: 1.7rem;
     color: var(--text-color);
     margin-left: 3rem;
 }
 
-
-#nav-menu {
-    list-style: none;
-    display: flex;
-
-    background: var(--bg-oxford-red);
-}
-
+/* Hover and Active Link Styles */
 #nav-menu a:hover,
 #nav-menu a.active {
-    color: var(--bg-carolina-red)
+    color: var(--bg-carolina-red);
 }
 
+/* Menu Icon Styles */
 #menu-icon {
     font-size: 3.6rem;
     color: var(--text-color);
     display: none;
 }
+
+/* Responsive Styles for Small Screens */
+@media (max-width: 768px) {
+    #nav-menu {
+        display: none; /* Initially hide menu */
+        width: 100%;
+        flex-direction: column;
+        position: absolute;
+        top: 80px; /* Adjust based on your header height */
+        left: 0;
+        background: var(--bg-oxford-red);
+        text-align: center;
+        padding: 1rem 0;
+    }
+
+    #nav-menu a {
+        margin: 1rem 0;
+    }
+
+    /* Show menu icon (hamburger) */
+    #menu-icon {
+        display: block;
+        cursor: pointer;
+    }
+
+    .nav-active {
+        display: flex;
+    }
+}
+
 
 /*  */
 
@@ -284,7 +317,7 @@ span {
     text-align: center;
     justify-content: center;
     align-items: center;
-    gap: 2rem;
+    margin-bottom: 0;
     background: var(--bg-oxford-red);
 }
 

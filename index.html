@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">      
     <title>Rahul Sharma - Portfolio</title>
     <meta name="title" content="Rahul Sharma - Portfolio" />
     <meta name="description"
@@ -29,11 +30,13 @@
 <body id="top">
 
     <!-- ****************************************  ** Navbar  **  *************************************************** -->
-
     <header class="header">
         <a href="#" class="logo">RAHUL SHARMA</a>
-        <i class="fa-solid fa-bars"></i>
-
+        
+        <!-- Hamburger Icon (only visible on small screens) -->
+        <i class="fa-solid fa-bars" id="menu-icon"></i>
+    
+        <!-- Nav Menu -->
         <nav id="nav-menu">
             <a class="nav-link home" href="#home">Home</a>
             <a class="nav-link about" href="#about">About</a>
@@ -41,15 +44,15 @@
             <a class="nav-link projects" href="#projects">Projects</a>
             <a class="nav-link stat" href="#github-stats">Github Statistics</a>
             <a class="nav-link contact" href="#contact">Contact</a>
-
+    
             <li id="resume-button-1" class="nav-link resume">
-                <a href="./images/imagesandresume/RahulSharma-FullStackWebDeveloper-di18.pdf"
-                    target="_blank" id="resume-link-1" download="">Resume
+                <a href="./images/imagesandresume/RahulSharma-FullStackWebDeveloper-di18.pdf" target="_blank" id="resume-link-1" download="">Resume
                     <i class='bx bxs-download'></i></a>
             </li>
-
         </nav>
     </header>
+    
+    
     <!-- ****************************************  ** Navbar Ends **  *************************************************** -->
 
     <!-- ****************************************  ** Home Section **  *************************************************** -->
@@ -60,7 +63,7 @@
             <h3 style="margin-left: 30px;">Hello, it's Me</h3>
 
             <h1 style="margin-left: 30px;" id="user-detail-name">Rahul Sharma</h1>
-            <h3 style="margin-left: 30px;">And I'm a Full Stack Developer <br><span class="multiple-text"></span></h3>
+            <h3 style="margin-left: 30px;"><br><span class="multiple-text"></span></h3>
 
             <div style="margin-left: 30px;" class="social-media">
                 <a href="https://github.com/rahulsharma998" target="_blank"><i class='bx bxl-github'></i></a>
