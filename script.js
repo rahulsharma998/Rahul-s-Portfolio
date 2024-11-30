@@ -24,7 +24,7 @@ let resume2 = document.getElementById("resume-button-2").addEventListener("click
 
 function NewTab() {
     window.open(
-        "./RahulSharma-FullStackWebDeveloper-2rz9.pdf",
+        "./RahulSharma-FullStackWebDeveloper-FX9I.pdf",
         "_blank"
     );
 }
