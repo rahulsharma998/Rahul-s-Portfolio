@@ -24,7 +24,7 @@ let resume2 = document.getElementById("resume-button-2").addEventListener("click
 
 function NewTab() {
     window.open(
-        "https://drive.google.com/file/d/1fqprFWdaU7dH2XXdFYvD0o5M8XuZ-v-I/view?usp=sharing",
+        "./RahulSharma-FullStackWebDeveloper-2rz9.pdf",
         "_blank"
     );
 }
