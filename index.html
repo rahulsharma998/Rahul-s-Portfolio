@@ -1,341 +1,659 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">      
+
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
     <title>Rahul Sharma - Portfolio</title>
     <meta name="title" content="Rahul Sharma - Portfolio" />
-    <meta name="description"
-        content="Hey Hii! I'm Rahul Sharma, a passionate Full Stack Web Developer with expertise in MERN stack and Python. Kindly go through my portfolio if you are a recruiter looking for a dedicated developer. Feel free to contact me." />
+    <meta name="description" content="Portfolio of Rahul Sharma, Full Stack & Mobile App Developer." />
 
     <!-- Github Calendar -->
     <script src="https://unpkg.com/github-calendar@latest/dist/github-calendar.min.js"></script>
-
     <link rel="stylesheet" href="https://unpkg.com/github-calendar@latest/dist/github-calendar-responsive.css" />
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-    <!-- Custom CSS Link -->
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'wild-red-yonder': 'hsla(270, 40%, 80%, 1)',
+                        'carolina-red': 'hsla(300, 60%, 50%, 1)',
+                        'prussian-red': 'hsla(240, 30%, 20%, 1)',
+                        'oxford-red': 'hsla(250, 35%, 15%, 1)',
+                        'oxford-red-2': 'hsla(250, 38%, 12%, 1)',
+                        'text-white': '#fff',
+                        'border-prussian': 'hsla(216, 33%, 20%, 1)',
+                    },
+                    fontFamily: {
+                        'sans': ['"Poppins"', '"Noto Sans"', 'sans-serif'],
+                    },
+                    keyframes: {
+                        floatImage: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-2.4rem)' },
+                        },
+                        homeDeco: {
+                            '0%': { transform: 'translateY(40px) rotate(0)' },
+                            '100%': { transform: 'translateY(0) rotate(0.4turn)' },
+                        }
+                    },
+                    animation: {
+                        'float-image': 'floatImage 4s ease-in-out infinite',
+                        'home-deco': 'homeDeco 3s linear infinite alternate'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Moving custom internal styles to style.css as requested, but keeping link here for now or assuming the user will handle external css if they strictly want to. actually i will keep the small styles here to ensure functionality as they are minimal overrides -->
+
     <link rel="stylesheet" href="style.css">
-    <!-- Preload Images -->
-    <link rel="preload" as="image" href="./images/svg/ezgif.com-effects.gif" />
-    <link rel="preload" as="image" href="./images/pattern-2.svg" />
-    <link rel="preload" as="image" href="./images/pattern-3.svg" />
+    <style>
+        /* Custom Styles for JS toggles that are harder to do with pure utility classes alone */
+        .sticky {
+            border-bottom: 1px solid rgba(0, 0, 0, .2);
+            background: rgba(26, 26, 46, 0.95) !important;
+            /* Slightly more opaque oxford-red */
+        }
+
+        .nav-active {
+            display: flex !important;
+        }
+
+        /* Calendar customization to match theme */
+        .react-activity-calendar {
+            color: white !important;
+        }
+
+        /* Glassmorphism for cards */
+        .glass-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
 
     <link rel="shortcut icon" href="./images/img_56497.webp" type="image/x-icon">
 </head>
 
-<body id="top">
+<body id="top" class="bg-oxford-red-2 text-white font-sans flex flex-col min-h-screen overflow-x-hidden">
 
-    <!-- ****************************************  ** Navbar  **  *************************************************** -->
-    <header class="header">
-        <a href="#" class="logo">RAHUL SHARMA</a>
-        
-        <!-- Hamburger Icon (only visible on small screens) -->
-        <i class="fa-solid fa-bars" id="menu-icon"></i>
-    
-        <!-- Nav Menu -->
-        <nav id="nav-menu">
-            <a class="nav-link home" href="#home">Home</a>
-            <a class="nav-link about" href="#about">About</a>
-            <a class="nav-link skills" href="#skills">Skills</a>
-            <a class="nav-link projects" href="#projects">Projects</a>
-            <a class="nav-link stat" href="#github-stats">Github Statistics</a>
-            <a class="nav-link contact" href="#contact">Contact</a>
-    
-            <li id="resume-button-1" class="nav-link resume">
-                <a href="./RahulSharma-FullStackWebDeveloper-FX9I.pdf" target="_blank" id="resume-link-1" download="">Resume
-                    <i class='bx bxs-download'></i></a>
-            </li>
+    <!-- Header -->
+    <header
+        class="header fixed top-0 left-0 w-full px-[9%] py-4 bg-oxford-red flex justify-between items-center z-50 transition-all duration-300">
+        <a href="#" class="logo text-3xl font-bold text-white cursor-default">RAHUL SHARMA.</a>
+
+        <i class='bx bx-menu text-4xl text-white cursor-pointer md:hidden' id="menu-icon"></i>
+
+        <nav id="nav-menu" class="hidden md:flex gap-8">
+            <a class="text-lg text-white hover:text-carolina-red transition-colors duration-300" href="#home">Home</a>
+            <a class="text-lg text-white hover:text-carolina-red transition-colors duration-300" href="#about">About</a>
+            <a class="text-lg text-white hover:text-carolina-red transition-colors duration-300"
+                href="#skills">Skills</a>
+            <a class="text-lg text-white hover:text-carolina-red transition-colors duration-300"
+                href="#projects">Projects</a>
+            <!-- <a class="text-lg text-white hover:text-carolina-red transition-colors duration-300"
+                href="#github-stats">Stats</a> -->
+            <a class="text-lg text-white hover:text-carolina-red transition-colors duration-300"
+                href="#contact">Contact</a>
+
+            <a href="./RahulResume.pdf" target="_blank" download=""
+                class="text-lg text-white hover:text-carolina-red flex items-center gap-1 group">
+                Resume <i class='bx bxs-download group-hover:animate-bounce'></i>
+            </a>
         </nav>
+
+        <style>
+            @media (max-width: 768px) {
+                #nav-menu.nav-active {
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    width: 100%;
+                    padding: 1rem 3%;
+                    background: hsla(250, 35%, 15%, 1);
+                    flex-direction: column;
+                    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .2);
+                    display: flex !important;
+                }
+
+                #nav-menu.nav-active a {
+                    margin: 1.5rem 0;
+                    font-size: 1.5rem;
+                }
+            }
+        </style>
     </header>
-    
-    
-    <!-- ****************************************  ** Navbar Ends **  *************************************************** -->
 
-    <!-- ****************************************  ** Home Section **  *************************************************** -->
+    <section class="home min-h-screen flex flex-col md:flex-row justify-center items-center px-[9%] pt-32 pb-10 gap-10"
+        id="home">
+        <div class="home-content flex-1 max-w-2xl">
+            <h3 class="text-4xl font-bold mb-4 opacity-100 text-white">Hello, it's Me</h3>
+            <h1 class="text-6xl md:text-8xl font-bold leading-tight mb-4 text-white drop-shadow-lg">Rahul Sharma</h1>
+            <h3 class="text-4xl font-bold mb-6 text-white">And I'm a <span
+                    class="multiple-text text-carolina-red"></span></h3>
 
-    <section class="home" id="home">
-
-        <div class="home-content">
-            <h3 style="margin-left: 30px;">Hello, it's Me</h3>
-
-            <h1 style="margin-left: 30px;" id="user-detail-name">Rahul Sharma</h1>
-            <h3 style="margin-left: 30px;"><br><span class="multiple-text"></span></h3>
-
-            <div style="margin-left: 30px;" class="social-media">
-                <a href="https://github.com/rahulsharma998" target="_blank"><i class='bx bxl-github'></i></a>
-                <a href="https://www.linkedin.com/in/rahul-sharma-734a2816b/" target="_blank"><i
-                        class='bx bxl-linkedin'></i></a>
-            </div>
-
-            <li style="margin-left: 20px;" id="resume-button-2">
-                <a href="./RahulSharma-FullStackWebDeveloper-FX9I.pdf"
-                    target="_blank" id="resume-link-2" class="button" download="">Resume <i
-                        class='bx bxs-download'></i></a>
-            </li>
-
-        </div>
-
-        <div class="home-image">
-            <img class="home-img" style="width: 500px; margin-left: 50px;" src="https://img.freepik.com/free-vector/web-development-programmer-engineering-coding-website-augmented-reality-interface-screens-developer-project-engineer-programming-software-application-design-cartoon-illustration_107791-3863.jpg?t=st=1731247463~exp=1731251063~hmac=d6b420af62c1cb86e2df02a57b9a51ccba87b22d93a62ab3b24f7377c0e0838f&w=996"
-                alt="profile-pic" />
-
-            <img src="./images/pattern-2.svg" width="27" height="26" alt="shape" class="shape shape-1" />
-
-            <img src="./images/pattern-3.svg" width="27" height="26" alt="shape" class="shape shape-2" />
-        </div>
-
-        <img src="./images/shadow-1.svg" width="500" height="800" alt="" class="hero-bg hero-bg-1" />
-
-        <img src="./images/shadow-2.svg" width="500" height="500" alt="" class="hero-bg hero-bg-2" />
-        </div>
-    </section>
-    <!-- *****************************************  ** Home Section Ends **  ***************************************************** -->
-
-    <!-- ****************************************  ** About Section **  *************************************************** -->
-
-    <section id="about" class="about section">
-
-        <h2 class="heading"><i class='bx bx-user'></i>About
-            <span>Me!</span>
-            <div style="margin-top: 30px;" class="about-content">
-                <h3>I'm <span>Rahul Sharma</span></h3>
-                <h3>Full Stack Web Developer</h3>
-                <p id="user-detail-intro">
-                    I'm a dedicated Full Stack Web Developer with a strong foundation in both front-end and back-end
-                    technologies,
-                    driven by a passion for building efficient, user-friendly, and scalable web applications. My
-                    technical
-                    toolkit
-                    includes expertise in HTML, CSS, JavaScript, React, Redux, Node.js, and MongoDB for creating
-                    modern, responsive user interfaces. I’m also proficient in Python for backend development and
-                    working with databases like MongoDB and SQL.
-                    <br><br>
-                    With a solid command of JavaScript, Python, and web technologies, I aim to create digital solutions
-                    that make an impact. My goal is to continually learn and evolve, building applications that provide
-                    real value.
-                </p>
-
-            </div>
-    </section>
-    <!--------------------------------------------- skills start-------------------------------------------------------------> 
-<section id="skills" class="skills">
-    <div class="container tags">
-        <h2 class="heading">Skills and <span>Tools</span></h2>
-        
-        <ul class="grid-list">
-            <li>
-                <button class="skills-card tag-btn">
-                    <img src="./images/html" class="skills-card-img" width="32" height="32" loading="lazy" alt="HTML" />
-                    <p class="skills-card-name">HTML</p>
-                </button>
-            </li>
-            <li>
-                <button class="skills-card tag-btn">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" class="skills-card-img" width="32" height="32" loading="lazy" alt="Python" />
-                    <p class="skills-card-name">Python</p>
-                </button>
-            </li>
-            <li>
-                <button class="skills-card tag-btn">
-                    <img src="./images/css.png" class="skills-card-img" width="32" height="32" loading="lazy" alt="CSS" />
-                    <p class="skills-card-name">CSS</p>
-                </button>
-            </li>
-            <li>
-                <button class="skills-card tag-btn">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" class="skills-card-img" width="32" height="32" loading="lazy" alt="JavaScript" />
-                    <p class="skills-card-name">JavaScript</p>
-                </button>
-            </li>
-            <li>
-                <button class="skills-card tag-btn">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" class="skills-card-img" width="32" height="32" loading="lazy" alt="GitHub" />
-                    <p class="skills-card-name">GitHub</p>
-                </button>
-            </li>
-            <li>
-                <button class="skills-card tag-btn">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" class="skills-card-img" width="32" height="32" loading="lazy" alt="TypeScript" />
-                    <p class="skills-card-name">TypeScript</p>
-                </button>
-            </li>
-            <li>
-                <button class="skills-card tag-btn">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" class="skills-card-img" width="32" height="32" loading="lazy" alt="NodeJS" />
-                    <p class="skills-card-name">NodeJS</p>
-                </button>
-            </li>
-            <li>
-                <button class="skills-card tag-btn">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" class="skills-card-img" width="32" height="32" loading="lazy" alt="MongoDB" />
-                    <p class="skills-card-name">MongoDB</p>
-                </button>
-            </li>
-            <li>
-                <button class="skills-card tag-btn">
-                    <img class="skills-card-img" src="./images/react.png" width="32" height="32" loading="lazy" />
-                    <p class="skills-card-name">React</p>
-                </button>
-            </li>
-            <li>
-                <button class="skills-card tag-btn">
-                    <img class="skills-card-img" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" width="32" height="32" loading="lazy" />
-                    <p class="skills-card-name">MySQL</p>
-                </button>
-            </li>
-            <li>
-                <button class="skills-card tag-btn">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-original.svg" class="skills-card-img" width="32" height="32" loading="lazy" alt="Firebase" />
-                    <p class="skills-card-name">Firebase</p>
-                </button>
-            </li>
-            <li>
-                <button class="skills-card tag-btn">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" class="skills-card-img" width="32" height="32" loading="lazy" alt="Postman" />
-                    <p class="skills-card-name">Postman</p>
-                </button>
-            </li>
-            <li>
-                <button class="skills-card tag-btn">
-                    <img class="skills-card-img" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" width="32" height="32" loading="lazy" />
-                    <p class="skills-card-name">VSCode</p>
-                </button>
-            </li>
-            <li>
-                <button class="skills-card tag-btn">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" class="skills-card-img" width="32" height="32" loading="lazy" alt="Figma" />
-                    <p class="skills-card-name">Figma</p>
-                </button>
-            </li>
-            <li>
-                <button class="skills-card tag-btn">
-                    <img src="https://res.cloudinary.com/chakra-ui/image/upload/v1604522148/logo/logomark-colored_dtpqzv.svg" 
-                         class="skills-card-img" 
-                         width="32" 
-                         height="32" 
-                         loading="lazy" 
-                         alt="Chakra UI" />
-                    <p class="skills-card-name">Chakra UI</p>
-                </button>
-            </li>
-            
-            <li>
-                <button class="skills-card tag-btn">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" class="skills-card-img" width="32" height="32" loading="lazy" alt="Tailwind CSS"
-                    width="32" height="32" loading="lazy" />
-
-                        <p class="skills-card-name">Tailwind</p>
-                    </button>
-                </li>
-
-            </ul>
-        </div>
-
-    </section>
-    
-    <!-- <section class="project" id="projects"> -->
- 
-<section class="project" id="projects">
-    <h2 class="heading">My <span>Projects</span></h2>
-    <div class="project-container">
-        <!-- evolution of ui ux Project -->
-        <div class="project-card">
-            <img src="./images/imagesandresume/evolution of ui ux.png" alt="evolution od ui an ux project">
-            <div class="project-layer">
-                <h4 class="project-title">Evolution of UI and UX</h4>
-                <div class="pro-Links">
-                    <a href="https://github.com/sakshimadne/Design-Discus_013" target="_blank" class="project-github-link"><i class='bx bxl-github'></i></a>
-                    <a href="https://design-timeline.netlify.app/" target="_blank" class="project-deployed-link"><i class='bx bxl-netlify'></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="project-description-container">
-            <p class="project-description">
-                The "Evolution of UI/UX" project explores the transformation of user interfaces and experiences across major tech companies like Amazon, Microsoft, Google, Facebook, and Apple. It showcases how design has evolved to enhance usability, accessibility, and user engagement over time.
+            <p class="text-lg mb-8 text-gray-300 max-w-lg">
+                Building scalable web and mobile applications with modern technologies.
+                Focused on creating seamless user experiences and robust backend systems.
             </p>
-            <h5 class="project-tech-stack">HTML | CSS</h5>
-        </div>
 
-        <!-- Task Master Project -->
-        <div class="project-card">
-            <img src="./images/svg/Screenshot (2425).png" alt="Task Master project screenshot">
-            <div class="project-layer">
-                <h4 class="project-title">Task Master</h4>
-                <div class="pro-Links">
-                    <a href="https://github.com/DishaGupta27/SpaceX-Scripters_003" target="_blank" class="project-github-link"><i class='bx bxl-github'></i></a>
-                    <a href="https://transcendent-trifle-d9e265.netlify.app/" target="_blank" class="project-deployed-link"><i class='bx bxl-netlify'></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="project-description-container">
-            <p class="project-description">
-                TASKMASTER is a task management system designed to help users create, manage, and track tasks with ease.
-            </p>
-            <h5 class="project-tech-stack">HTML | CSS | JavaScript</h5>
-        </div>
-    </div>
-</section>
-
-<!-- GitHub Stats Section -->
-<div id="github-stats">
-    <h2 class="heading">GitHub <span class="span">Statistics</span></h2>
-    <div class="container">
-        <div>
-            <div class="react-activity-calendar calendar">Loading data...</div>
-            <div class="stats">
-                <a href="https://github.com/rahulsharma998">
-                    <img id="github-streak-stats" src="https://github-readme-streak-stats.herokuapp.com/?user=rahulsharma998&theme=black-ice&hide_border=true&stroke=0000&background=060A0CD0" alt="GitHub Streak Stats">
-                    <img id="github-stats-card" src="https://github-readme-stats.vercel.app/api?username=rahulsharma998&show_icons=true&count_private=true&theme=react&hide_border=true&bg_color=0D1117" alt="GitHub Stats Card">
-                    <img src="https://github-readme-stats.vercel.app/api/top-langs?username=rahulsharma998&show_icons=true&locale=en&layout=compact&theme=react&hide_border=true&bg_color=0D1117" id="github-top-langs" alt="GitHub Top Languages">
+            <div class="social-media flex gap-4 mb-8">
+                <a href="https://github.com/rahulsharma998" target="_blank"
+                    class="w-12 h-12 flex justify-center items-center border-2 border-carolina-red rounded-full text-carolina-red text-2xl hover:bg-carolina-red hover:text-oxford-red hover:shadow-[0_0_1rem_hsla(300,60%,50%,1)] transition-all duration-500">
+                    <i class='bx bxl-github'></i>
+                </a>
+                <a href="https://www.linkedin.com/in/rahul-sharma-734a2816b/" target="_blank"
+                    class="w-12 h-12 flex justify-center items-center border-2 border-carolina-red rounded-full text-carolina-red text-2xl hover:bg-carolina-red hover:text-oxford-red hover:shadow-[0_0_1rem_hsla(300,60%,50%,1)] transition-all duration-500">
+                    <i class='bx bxl-linkedin'></i>
                 </a>
             </div>
+
+            <a href="./RahulResume.pdf" target="_blank" download=""
+                class="inline-block px-8 py-3 bg-carolina-red rounded-full text-oxford-red font-bold text-lg hover:shadow-[0_0_1rem_hsla(300,60%,50%,1)] transition-all duration-300">
+                Download Resume <i class='bx bxs-download ml-1'></i>
+            </a>
         </div>
-    </div>
-</div>
 
+        <div class="home-image relative flex-1 flex justify-center">
+            <div class="relative w-[300px] md:w-[450px]">
+                <img class="w-full home-img animate-float-image z-10 relative rounded-2xl"
+                    src="https://img.freepik.com/free-vector/web-development-programmer-engineering-coding-website-augmented-reality-interface-screens-developer-project-engineer-programming-software-application-design-cartoon-illustration_107791-3863.jpg"
+                    alt="Rahul Sharma Profile" />
 
-<!-- Contact Section -->
-<div class="contact-section" id="contact">
-    <div class="contact-header">
-        <h2>Feel Free To <span>Contact</span></h2>
-    </div>
-    <div class="contact-form-container">
-        <form action="https://api.web3forms.com/submit" method="POST" class="contact-form">
-            <div class="form-row">
-                <input type="hidden" name="access_key" value="64faa76e-4905-44b0-9759-5988af42db66">
-                <input style="border: 2px solid #0ea6ec;" type="text" name="Name" placeholder="Name" required class="form-input">
-                <input style="border: 2px solid #0ea6ec;" type="email" name="Email" placeholder="Email" required class="form-input">
+                <img src="./images/pattern-2.svg" class="absolute top-10 -right-10 w-8 h-8 animate-home-deco opacity-70"
+                    alt="" />
+                <img src="./images/pattern-3.svg" class="absolute bottom-5 -left-5 w-8 h-8 animate-home-deco opacity-70"
+                    alt="" />
             </div>
-            <input style="margin-bottom: 8px;border: 2px solid #0ea6ec;" type="text" name="Subject" placeholder="Subject" required class="form-input">
-            <textarea style="border: 2px solid #0ea6ec;" name="Your message" placeholder="Your Message" required class="form-textarea"></textarea>
-            <button style="border: 2px solid #0ea6ec;" type="submit" class="form-button">Send Message <i class="fas fa-arrow-right"></i></button>
-        </form>
-    </div>
-</div>
+        </div>
+    </section>
 
-<!-- Footer -->
-<footer class="footer">
-    <div class="footer-text">
-        <p> &thkap; Thank You for visiting, have a great time &thkap;</p>
-    </div>
-    <div class="footer-iconTop">
-        <a href="#home"><i class='bx bx-up-arrow-alt'></i></a>
-    </div>
-</footer>
+    <!-- About Section -->
+    <section id="about" class="about section bg-oxford-red py-24 px-[9%]">
+        <div class="text-center mb-12">
+            <h2 class="text-5xl font-bold mb-4">About <span class="text-carolina-red">Me</span></h2>
+        </div>
+
+        <div class="flex flex-col md:flex-row gap-10 items-start justify-center max-w-6xl mx-auto">
+            <div class="about-content glass-card p-10 rounded-2xl w-full">
+                <h3 class="text-3xl font-bold mb-2">I'm <span class="text-carolina-red">Rahul Sharma</span></h3>
+                <h3 class="text-2xl font-semibold mb-6">Full Stack & Mobile App Developer</h3>
+
+                <p class="text-lg text-gray-300 mb-6 leading-relaxed">
+                    I’m a Full-Stack Developer experienced in building scalable, production-ready web and mobile
+                    applications using <b>React, Next.js, and React Native</b>. My work focuses on creating clean,
+                    maintainable frontend architectures, intuitive user flows, and responsive interfaces that align with
+                    real business and product requirements.
+                </p>
+                <p class="text-lg text-gray-300 mb-6 leading-relaxed">
+                    I’ve worked extensively on B2B and B2C platforms in the travel and mobility domain, contributing to
+                    features such as booking workflows, payment integrations, search and discovery experiences, and
+                    vendor-facing systems. My core skill set includes <b>JavaScript, TypeScript, Redux, Zustand, React
+                        Hook Form, Zod,</b> and <b>Tailwind CSS</b>.
+                </p>
+                <p class="text-lg text-gray-300 leading-relaxed">
+                    I also have a solid working understanding of backend technologies including <b>Node.js, Express,
+                        MongoDB,</b> and <b>MySQL</b>, enabling effective API integration and collaboration across
+                    teams. I enjoy
+                    taking ownership of features, improving UI/UX through thoughtful iteration, and delivering reliable,
+                    user-centric products.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills min-h-screen py-24 px-[9%]">
+        <h2 class="text-center text-5xl font-bold mb-16">Skills & <span class="text-carolina-red">Tools</span></h2>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
+            <div
+                class="skill-card bg-oxford-red border border-border-prussian p-6 rounded-2xl flex flex-col items-center gap-4 hover:border-carolina-red hover:-translate-y-2 transition-all duration-300 cursor-pointer">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
+                    class="w-12 h-12 bg-white rounded-full p-1" alt="Next.js" />
+                <p class="text-gray-400 font-medium">Next.js</p>
+            </div>
+
+            <div
+                class="skill-card bg-oxford-red border border-border-prussian p-6 rounded-2xl flex flex-col items-center gap-4 hover:border-carolina-red hover:-translate-y-2 transition-all duration-300 cursor-pointer">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" class="w-12 h-12"
+                    alt="React Native" />
+                <p class="text-gray-400 font-medium">React Native</p>
+            </div>
+
+            <div
+                class="skill-card bg-oxford-red border border-border-prussian p-6 rounded-2xl flex flex-col items-center gap-4 hover:border-carolina-red hover:-translate-y-2 transition-all duration-300 cursor-pointer">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg" class="w-12 h-12"
+                    alt="Redux" />
+                <p class="text-gray-400 font-medium">Redux</p>
+            </div>
+
+            <div
+                class="skill-card bg-oxford-red border border-border-prussian p-6 rounded-2xl flex flex-col items-center gap-4 hover:border-carolina-red hover:-translate-y-2 transition-all duration-300 cursor-pointer">
+                <img src="./images/imagesandresume/zustand-original-512px.png" class="w-12 h-12" alt="Zustand" />
+                <p class="text-gray-400 font-medium">Zustand</p>
+            </div>
+
+            <div
+                class="skill-card bg-oxford-red border border-border-prussian p-6 rounded-2xl flex flex-col items-center gap-4 hover:border-carolina-red hover:-translate-y-2 transition-all duration-300 cursor-pointer">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" class="w-12 h-12"
+                    alt="Tailwind" />
+                <p class="text-gray-400 font-medium">Tailwind CSS</p>
+            </div>
+
+            <div
+                class="skill-card bg-oxford-red border border-border-prussian p-6 rounded-2xl flex flex-col items-center gap-4 hover:border-carolina-red hover:-translate-y-2 transition-all duration-300 cursor-pointer">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
+                    class="w-12 h-12" alt="TypeScript" />
+                <p class="text-gray-400 font-medium">TypeScript</p>
+            </div>
+
+            <div
+                class="skill-card bg-oxford-red border border-border-prussian p-6 rounded-2xl flex flex-col items-center gap-4 hover:border-carolina-red hover:-translate-y-2 transition-all duration-300 cursor-pointer">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                    class="w-12 h-12" alt="JavaScript" />
+                <p class="text-gray-400 font-medium">JavaScript</p>
+            </div>
+
+            <div
+                class="skill-card bg-oxford-red border border-border-prussian p-6 rounded-2xl flex flex-col items-center gap-4 hover:border-carolina-red hover:-translate-y-2 transition-all duration-300 cursor-pointer">
+                <img src="./images/react.png" class="w-12 h-12" alt="React" />
+                <p class="text-gray-400 font-medium">React</p>
+            </div>
+
+            <div
+                class="skill-card bg-oxford-red border border-border-prussian p-6 rounded-2xl flex flex-col items-center gap-4 hover:border-carolina-red hover:-translate-y-2 transition-all duration-300 cursor-pointer">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+                    class="w-12 h-12" alt="NodeJS" />
+                <p class="text-gray-400 font-medium">NodeJS</p>
+            </div>
+
+            <div
+                class="skill-card bg-oxford-red border border-border-prussian p-6 rounded-2xl flex flex-col items-center gap-4 hover:border-carolina-red hover:-translate-y-2 transition-all duration-300 cursor-pointer">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+                    class="w-12 h-12" alt="Python" />
+                <p class="text-gray-400 font-medium">Python</p>
+            </div>
+
+            <div
+                class="skill-card bg-oxford-red border border-border-prussian p-6 rounded-2xl flex flex-col items-center gap-4 hover:border-carolina-red hover:-translate-y-2 transition-all duration-300 cursor-pointer">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+                    class="w-12 h-12" alt="MongoDB" />
+                <p class="text-gray-400 font-medium">MongoDB</p>
+            </div>
+
+            <div
+                class="skill-card bg-oxford-red border border-border-prussian p-6 rounded-2xl flex flex-col items-center gap-4 hover:border-carolina-red hover:-translate-y-2 transition-all duration-300 cursor-pointer">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" class="w-12 h-12"
+                    alt="MySQL" />
+                <p class="text-gray-400 font-medium">MySQL</p>
+            </div>
+            <div
+                class="skill-card bg-oxford-red border border-border-prussian p-6 rounded-2xl flex flex-col items-center gap-4 hover:border-carolina-red hover:-translate-y-2 transition-all duration-300 cursor-pointer">
+                <img src="./images/html" class="w-12 h-12" alt="HTML" />
+                <p class="text-gray-400 font-medium">HTML</p>
+            </div>
+            <div
+                class="skill-card bg-oxford-red border border-border-prussian p-6 rounded-2xl flex flex-col items-center gap-4 hover:border-carolina-red hover:-translate-y-2 transition-all duration-300 cursor-pointer">
+                <img src="./images/css.png" class="w-12 h-12" alt="CSS" />
+                <p class="text-gray-400 font-medium">CSS</p>
+            </div>
+            <div
+                class="skill-card bg-oxford-red border border-border-prussian p-6 rounded-2xl flex flex-col items-center gap-4 hover:border-carolina-red hover:-translate-y-2 transition-all duration-300 cursor-pointer">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
+                    class="w-12 h-12 bg-white rounded-full" alt="GitHub" />
+                <p class="text-gray-400 font-medium">GitHub</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="project bg-oxford-red py-24 px-[9%]">
+        <h2 class="text-center text-5xl font-bold mb-16">My <span class="text-carolina-red">Projects</span></h2>
+
+        <h3 class="text-3xl font-bold mb-8 text-white border-l-4 border-carolina-red pl-4">Company Projects</h3>
+
+        <h4 class="text-2xl font-semibold mb-6 text-gray-300 ml-4">Web Development</h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto mb-16">
+
+            <a href="https://home.thereturnjourney.com/" target="_blank"
+                class="project-card relative rounded-2xl overflow-hidden group shadow-[0_0_1rem_hsla(300,60%,50%,0.2)] cursor-pointer block">
+                <img src="./images/imagesandresume/b2cWeb.png"
+                    class="w-full h-auto transition-transform duration-500 group-hover:scale-110 group-hover:brightness-50"
+                    alt="Dashboard">
+                <div
+                    class="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-oxford-red to-transparent flex flex-col justify-center items-center text-center p-8 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                    <h4 class="text-2xl font-bold mb-3">TRJ B2C Website</h4>
+                    <p class="text-base text-gray-300 mb-4">Travel platform for discovering and booking tours across
+                        global destinations. Built end-to-end booking flows with Razorpay payments, infinite scrolling,
+                        validated forms (RHF + Zod), and discovery features.</p>
+                    <div class="flex flex-wrap gap-2 mb-2 justify-center">
+                        <span class="text-xs bg-carolina-red text-oxford-red px-2 py-1 rounded font-bold">Next.js</span>
+                        <span class="text-xs bg-white text-oxford-red px-2 py-1 rounded font-bold">TypeScript</span>
+                        <span class="text-xs bg-carolina-red text-oxford-red px-2 py-1 rounded font-bold">Redux</span>
+                        <span class="text-xs bg-white text-oxford-red px-2 py-1 rounded font-bold">Tailwind</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="https://trjpartner.thereturnjourney.com/" target="_blank"
+                class="project-card relative rounded-2xl overflow-hidden group shadow-[0_0_1rem_hsla(300,60%,50%,0.2)] cursor-pointer block">
+                <img src="./images/imagesandresume/b2b.png"
+                    class="w-full h-auto transition-transform duration-500 group-hover:scale-110 group-hover:brightness-50"
+                    alt="Streaming Platform">
+                <div
+                    class="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-oxford-red to-transparent flex flex-col justify-center items-center text-center p-8 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                    <h4 class="text-2xl font-bold mb-3">TRJ Partner (B2B) Website</h4>
+                    <p class="text-base text-gray-300 mb-4">White-label B2B platform for vendors to manage and customize
+                        travel itineraries. Implemented search persistence, auto-filled inputs, smart categorization,
+                        and discovery sections for improved workflows.</p>
+                    <div class="flex flex-wrap gap-2 mb-2 justify-center">
+                        <span class="text-xs bg-carolina-red text-oxford-red px-2 py-1 rounded font-bold">Next.js</span>
+                        <span class="text-xs bg-white text-oxford-red px-2 py-1 rounded font-bold">TypeScript</span>
+                        <span class="text-xs bg-carolina-red text-oxford-red px-2 py-1 rounded font-bold">Zustand</span>
+                        <span class="text-xs bg-white text-oxford-red px-2 py-1 rounded font-bold">Tailwind</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="https://trjpartner.thereturnjourney.com/" target="_blank"
+                class="project-card relative rounded-2xl overflow-hidden group shadow-[0_0_1rem_hsla(300,60%,50%,0.2)] cursor-pointer block">
+                <img src="./images/imagesandresume/cabs.png"
+                    class="w-full h-auto transition-transform duration-500 group-hover:scale-110 group-hover:brightness-50"
+                    alt="CRM System">
+                <div
+                    class="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-oxford-red to-transparent flex flex-col justify-center items-center text-center p-8 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                    <h4 class="text-2xl font-bold mb-3">TRJ Cabs Website</h4>
+                    <p class="text-base text-gray-300 mb-4">Vendor platform for booking and managing vehicle rides based
+                        on availability. Features validated booking flows (upcoming, completed, cancelled), white-label
+                        pricing, PDF exports, and Razorpay payments.</p>
+                    <div class="flex flex-wrap gap-2 mb-2 justify-center">
+                        <span class="text-xs bg-carolina-red text-oxford-red px-2 py-1 rounded font-bold">Next.js</span>
+                        <span class="text-xs bg-white text-oxford-red px-2 py-1 rounded font-bold">TypeScript</span>
+                        <span class="text-xs bg-carolina-red text-oxford-red px-2 py-1 rounded font-bold">Redux</span>
+                        <span class="text-xs bg-white text-oxford-red px-2 py-1 rounded font-bold">Tailwind</span>
+                    </div>
+                </div>
+            </a>
 
 
+        </div>
 
-<!-- Scroll Reveal -->
-<script src="https://unpkg.com/scrollreveal"></script>
+        <!-- Mobile App Development (1 Project) -->
+        <h4 class="text-2xl font-semibold mb-6 text-gray-300 ml-4">Mobile App Development</h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto mb-16">
+            <div
+                class="project-card relative rounded-2xl overflow-hidden group shadow-[0_0_1rem_hsla(300,60%,50%,0.2)]">
+                <img src="./images/imagesandresume/b2cApp.jpeg"
+                    class="w-full h-auto transition-transform duration-500 group-hover:scale-110 group-hover:brightness-50"
+                    alt="Travel App">
+                <div
+                    class="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-oxford-red to-transparent flex flex-col justify-center items-center text-center p-8 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                    <h4 class="text-2xl font-bold mb-3">TRJ B2C Mobile Application</h4>
+                    <p class="text-base text-gray-300 mb-4">Cross-platform travel booking application for browsing
+                        destinations and managing bookings. Developed mobile booking and itinerary flows using React
+                        Native with integrated payments and responsive UI.</p>
+                    <div class="flex flex-wrap gap-2 mb-2 justify-center">
+                        <span class="text-xs bg-carolina-red text-oxford-red px-2 py-1 rounded font-bold">React
+                            Native</span>
+                        <span class="text-xs bg-white text-oxford-red px-2 py-1 rounded font-bold">Redux</span>
+                        <span
+                            class="text-xs bg-carolina-red text-oxford-red px-2 py-1 rounded font-bold">Tailwind</span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<!-- Typed JS -->
-<script src="https://unpkg.com/typed.js@2.0.132/dist/typed.umd.js"></script>
 
-<!-- Main Script -->
-<script src="script.js"></script>
+        <!-- Personal Projects -->
+        <h3 class="text-3xl font-bold mb-8 text-white border-l-4 border-carolina-red pl-4">Personal Projects</h3>
+
+        <h4 class="text-2xl font-semibold mb-6 text-gray-300 ml-4">Web Development</h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto mb-8">
+
+            <a href="https://chatmate-ijgx.onrender.com/" target="_blank"
+                class="project-card relative rounded-2xl overflow-hidden group shadow-[0_0_1rem_hsla(300,60%,50%,0.2)] block">
+                <img src="./images/imagesandresume/ChatMate.png"
+                    class="w-full h-auto transition-transform duration-500 group-hover:scale-110 group-hover:brightness-50"
+                    alt="ChatMate">
+                <div
+                    class="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-oxford-red to-transparent flex flex-col justify-center items-center text-center p-8 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                    <h4 class="text-2xl font-bold mb-3">ChatMate</h4>
+                    <p class="text-base text-gray-300 mb-4">Real-time one-to-one chat platform with AI-powered
+                        assistance. Built using React, Node.js, and Socket.IO with secure authentication, private
+                        messaging, and dynamic theme switching using DaisyUI.</p>
+                    <div class="flex flex-wrap gap-2 mb-2 justify-center">
+                        <span class="text-xs bg-carolina-red text-oxford-red px-2 py-1 rounded font-bold">React</span>
+                        <span class="text-xs bg-white text-oxford-red px-2 py-1 rounded font-bold">Node.js</span>
+                        <span
+                            class="text-xs bg-carolina-red text-oxford-red px-2 py-1 rounded font-bold">Socket.IO</span>
+                        <span class="text-xs bg-white text-oxford-red px-2 py-1 rounded font-bold">AI</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="https://design-timeline.netlify.app/" target="_blank"
+                class="project-card relative rounded-2xl overflow-hidden group shadow-[0_0_1rem_hsla(300,60%,50%,0.2)] block">
+                <img src="./images/imagesandresume/evolution of ui ux.png"
+                    class="w-full h-auto transition-transform duration-500 group-hover:scale-110 group-hover:brightness-50"
+                    alt="UI UX">
+                <div
+                    class="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-oxford-red to-transparent flex flex-col justify-center items-center text-center p-8 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                    <h4 class="text-2xl font-bold mb-3">Evolution of UI/UX</h4>
+                    <p class="text-base text-gray-300 mb-4">A visual exploration of how UI and UX design evolved across
+                        major technology platforms. Showcases design evolution across companies like Google, Apple,
+                        Amazon, and Microsoft with focus on usability.</p>
+                    <div class="flex flex-wrap gap-2 mb-2 justify-center">
+                        <span class="text-xs bg-carolina-red text-oxford-red px-2 py-1 rounded font-bold">HTML</span>
+                        <span class="text-xs bg-white text-oxford-red px-2 py-1 rounded font-bold">CSS</span>
+                    </div>
+                </div>
+            </a>
+
+
+        </div>
+
+        <!-- Mobile (1 Project) -->
+        <h4 class="text-2xl font-semibold mb-6 text-gray-300 ml-4">Mobile App Development</h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto">
+            <!-- Basky App -->
+            <a href="#" target="_blank"
+                class="project-card relative rounded-2xl overflow-hidden group shadow-[0_0_1rem_hsla(300,60%,50%,0.2)] block">
+                <img src="./images/imagesandresume/basky.png"
+                    class="w-full h-auto transition-transform duration-500 group-hover:scale-110 group-hover:brightness-50"
+                    alt="Fintech App">
+                <div
+                    class="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-oxford-red to-transparent flex flex-col justify-center items-center text-center p-8 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                    <h4 class="text-2xl font-bold mb-3">Basky – Online Grocery App</h4>
+                    <p class="text-base text-gray-300 mb-4">Mobile application for browsing and ordering groceries
+                        online. Built using Expo SDK 54 and React Native with product listing, cart flow, responsive
+                        mobile UI, and scalable component structure.</p>
+                    <div class="flex flex-wrap gap-2 mb-2 justify-center">
+                        <span class="text-xs bg-carolina-red text-oxford-red px-2 py-1 rounded font-bold">React
+                            Native</span>
+                        <span class="text-xs bg-white text-oxford-red px-2 py-1 rounded font-bold">Expo</span>
+                        <span
+                            class="text-xs bg-carolina-red text-oxford-red px-2 py-1 rounded font-bold">Tailwind</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- 
+    <section id="github-stats" class="py-24 px-[9%]">
+        <h2 class="text-center text-5xl font-bold mb-16">GitHub <span class="text-carolina-red">Statistics</span></h2>
+        <div class="container mx-auto flex flex-col items-center gap-8">
+            <div class="react-activity-calendar calendar text-white">Loading data...</div>
+            <div class="flex flex-col gap-6 w-full max-w-4xl">
+                <img class="w-full"
+                    src="https://github-readme-streak-stats.herokuapp.com/?user=rahulsharma998&theme=black-ice&hide_border=true&stroke=0000&background=060A0CD0"
+                    alt="GitHub Streak Stats">
+                <div class="flex flex-col md:flex-row gap-6">
+                    <img class="w-full md:w-1/2"
+                        src="https://github-readme-stats.vercel.app/api?username=rahulsharma998&show_icons=true&count_private=true&theme=react&hide_border=true&bg_color=0D1117"
+                        alt="GitHub Stats Card">
+                    <img class="w-full md:w-1/2"
+                        src="https://github-readme-stats.vercel.app/api/top-langs?username=rahulsharma998&show_icons=true&locale=en&layout=compact&theme=react&hide_border=true&bg_color=0D1117"
+                        alt="GitHub Top Languages">
+                </div>
+            </div>
+        </div>
+    </section> 
+    -->
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact py-24 px-[9%] bg-oxford-red">
+        <h2 class="text-center text-5xl font-bold mb-16">Contact <span class="text-carolina-red">Me</span></h2>
+
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+
+            <!-- Contact Info -->
+            <div class="contact-info bg-oxford-red-2 p-8 rounded-2xl border border-border-prussian shadow-lg">
+                <h3 class="text-3xl font-bold mb-8 text-white">Let's Talk!</h3>
+                <p class="text-gray-400 text-lg mb-8">I'm currently available for full-time opportunities or freelance
+                    projects. Feel free to reach out and I'll get back to you as soon as possible.</p>
+
+                <div class="flex flex-col gap-6">
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="w-12 h-12 bg-carolina-red/10 rounded-full flex items-center justify-center border border-carolina-red/30">
+                            <i class='bx bxs-map text-2xl text-carolina-red'></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold">Location</h4>
+                            <p class="text-gray-400">Pune, Maharashtra, India</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="w-12 h-12 bg-carolina-red/10 rounded-full flex items-center justify-center border border-carolina-red/30">
+                            <i class='bx bxs-phone text-2xl text-carolina-red'></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold">Phone</h4>
+                            <p class="text-gray-400">+91 9602984762</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="w-12 h-12 bg-carolina-red/10 rounded-full flex items-center justify-center border border-carolina-red/30">
+                            <i class='bx bxs-envelope text-2xl text-carolina-red'></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold">Email</h4>
+                            <p class="text-gray-400">rahulsharma243998@gmail.com</p>
+                        </div>
+                    </div>
+
+                    <!-- <div class="flex items-center gap-4">
+                        <div
+                            class="w-12 h-12 bg-carolina-red/10 rounded-full flex items-center justify-center border border-carolina-red/30">
+                            <i class='bx bxl-linkedin text-2xl text-carolina-red'></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold">LinkedIn</h4>
+                            <a href="https://www.linkedin.com/in/rahulsharma998/" target="_blank"
+                                class="text-gray-400 hover:text-carolina-red transition-colors">rahulsharma998</a>
+                        </div>
+                    </div> -->
+                </div>
+
+                <div class="flex gap-4 mt-10">
+                    <a href="https://github.com/rahulsharma998" target="_blank"
+                        class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-carolina-red hover:text-oxford-red transition-all duration-300">
+                        <i class='bx bxl-github text-2xl'></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/rahul-sharma-734a2816b/" target="_blank"
+                        class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-carolina-red hover:text-oxford-red transition-all duration-300">
+                        <i class='bx bxl-linkedin text-2xl'></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="bg-white/5 p-8 rounded-2xl border border-white/10">
+                <form id="contactForm" action="https://api.web3forms.com/submit" method="POST"
+                    class="flex flex-col gap-6">
+                    <input type="hidden" name="access_key" value="64faa76e-4905-44b0-9759-5988af42db66">
+                    <input type="hidden" name="subject" value="New Contact Form Submission from Portfolio">
+                    <input type="hidden" name="from_name" value="Portfolio Contact Form">
+                    <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="w-full">
+                            <label class="block text-gray-400 mb-2 ml-1">Name</label>
+                            <input type="text" name="name" placeholder="Rahul Sharma" required
+                                class="w-full p-4 bg-oxford-red-2 text-white border border-white/10 rounded-xl focus:border-carolina-red focus:shadow-[0_0_1rem_hsla(300,60%,50%,0.2)] outline-none transition-all">
+                        </div>
+                        <div class="w-full">
+                            <label class="block text-gray-400 mb-2 ml-1">Email</label>
+                            <input type="email" name="email" placeholder="example@mail.com" required
+                                class="w-full p-4 bg-oxford-red-2 text-white border border-white/10 rounded-xl focus:border-carolina-red focus:shadow-[0_0_1rem_hsla(300,60%,50%,0.2)] outline-none transition-all">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-400 mb-2 ml-1">Subject</label>
+                        <input type="text" name="subject" placeholder="Project Inquiry" required
+                            class="w-full p-4 bg-oxford-red-2 text-white border border-white/10 rounded-xl focus:border-carolina-red focus:shadow-[0_0_1rem_hsla(300,60%,50%,0.2)] outline-none transition-all">
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-400 mb-2 ml-1">Message</label>
+                        <textarea name="message" placeholder="How can I help you?" required rows="5"
+                            class="w-full p-4 bg-oxford-red-2 text-white border border-white/10 rounded-xl focus:border-carolina-red focus:shadow-[0_0_1rem_hsla(300,60%,50%,0.2)] outline-none resize-none transition-all"></textarea>
+                    </div>
+
+                    <button type="submit" id="submitBtn"
+                        class="w-full py-4 bg-carolina-red text-oxford-red font-bold text-lg rounded-xl hover:shadow-[0_0_1.5rem_hsla(300,60%,50%,0.4)] transition-all duration-300 flex items-center justify-center gap-2">
+                        Send Message <i class='bx bxs-send'></i>
+                    </button>
+
+                    <div id="formResult" class="hidden text-center text-lg font-semibold mt-4"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-6 px-[9%] bg-white/5 flex flex-wrap justify-between items-center">
+        <div class="text-lg">
+            <p> &copy; Rahul Sharma | Thank You for visiting</p>
+        </div>
+        <div>
+            <a href="#top"
+                class="inline-flex justify-center items-center p-3 bg-carolina-red rounded-lg hover:shadow-[0_0_1rem_hsla(300,60%,50%,1)] transition-all">
+                <i class='bx bx-up-arrow-alt text-2xl text-oxford-red'></i>
+            </a>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="https://unpkg.com/typed.js@2.0.132/dist/typed.umd.js"></script>
+    <script src="script.js"></script>
+
 </body>
+
 </html>
