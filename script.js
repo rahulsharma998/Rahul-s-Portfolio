@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const resume2 = document.getElementById("resume-button-2");
 
   function NewTab() {
-    window.open("./RahulResume.pdf", "_blank");
+    window.open("./Rahul_Sharma_AI-3.pdf", "_blank");
   }
 
   if (resume1) {
@@ -57,8 +57,14 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     let header = document.querySelector("header");
+    let scrollTop = document.getElementById("scroll-top");
+
     if (header) {
       header.classList.toggle("sticky", window.scrollY > 100);
+    }
+
+    if (scrollTop) {
+      scrollTop.classList.toggle("show", window.scrollY > 500);
     }
 
     if (menuIcon && navMenu) {
@@ -87,10 +93,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const typedElement = document.querySelector(".multiple-text");
         if (typedElement) {
           const typed = new Typed(".multiple-text", {
-            strings: ["Full Stack Developer", "Mobile App Developer", "Frontend Developer"],
+            strings: ["Full Stack Developer", "AI Engineer","Mobile App Developer", "Frontend Developer"],
             typeSpeed: 50,
             backSpeed: 50,
-            backDelay: 1500,
+            backDelay: 1000,
             startDelay: 0,
             loop: true,
             loopCount: Infinity,
@@ -115,6 +121,11 @@ document.addEventListener('DOMContentLoaded', function () {
   const submitBtn = document.getElementById('submitBtn');
   const formResult = document.getElementById('formResult');
 
+  if (formResult) {
+    formResult.classList.add('hidden');
+    formResult.textContent = '';
+  }
+
   if (contactForm) {
     contactForm.addEventListener('submit', async function (e) {
       e.preventDefault();
@@ -126,26 +137,37 @@ document.addEventListener('DOMContentLoaded', function () {
 
       try {
         const formData = new FormData(contactForm);
+        
+        // Log submission attempt
+        console.log('🚀 Sending message to Web3Forms...');
+
         const response = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
           body: formData
         });
 
         const data = await response.json();
+        console.log('📬 Web3Forms API Response:', data);
+
+        // Artificial delay of 800ms to ensure the user sees the "Sending..." state
+        await new Promise(resolve => setTimeout(resolve, 800));
 
         if (data.success) {
-          formResult.textContent = '✅ Thank you! Your message has been sent successfully.';
+          formResult.textContent = '✅ Success! Your message has been sent. Please check your inbox (and Spam folder).';
           formResult.classList.remove('hidden', 'text-red-500');
-          formResult.classList.add('text-green-400');
+          formResult.classList.add('text-green-400', 'animate-pulse');
           contactForm.reset();
+          
+          // Remove pulse after a few seconds
+          setTimeout(() => formResult.classList.remove('animate-pulse'), 3000);
         } else {
-          throw new Error(data.message || 'Something went wrong');
+          throw new Error(data.message || 'The server returned an error.');
         }
       } catch (error) {
-        formResult.textContent = '❌ Oops! Something went wrong. Please try again.';
+        console.error('❌ Form submission failure:', error);
+        formResult.textContent = `❌ Error: ${error.message || 'Something went wrong. Please check your connection or contact me via LinkedIn.'}`;
         formResult.classList.remove('hidden', 'text-green-400');
         formResult.classList.add('text-red-500');
-        console.error('Form submission error:', error);
       } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = 'Send Message <i class="fas fa-arrow-right ml-2"></i>';
